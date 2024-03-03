@@ -16,7 +16,7 @@ public class TextSpeechService: ITextSpeechService
         this.webHostEnvironment = webHostEnvironment;
     }
 
-    // public async Task<SpeechRecognitionResult> GetTextOfSpeechAsync(string pathOfSpeech)
+    // public async Task<string> GetTextOfSpeechAsync(string pathOfSpeech)
     public async Task<SpeechRecognitionResult> GetTextOfSpeechAsync(string pathOfSpeech)
     {
         // if we want input audio data form microphone!!!
@@ -31,9 +31,6 @@ public class TextSpeechService: ITextSpeechService
             subscriptionKey: this.SpeechKey, 
             region: this.SpeechRegion);
 
-        var startTime = DateTime.Now;
-        var audioDuration = GetAudioDuration(pathOfSpeech);
-        
         using (var speechRecognizer = new SpeechRecognizer(audioConfig: audioConfig, speechConfig: speechConfig))
         {
             return await speechRecognizer.RecognizeOnceAsync();

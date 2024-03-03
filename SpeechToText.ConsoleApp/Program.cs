@@ -1,5 +1,4 @@
-﻿
-using Microsoft.CognitiveServices.Speech;
+﻿using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 using NAudio.Wave;
 
@@ -44,32 +43,20 @@ class Program
     
     static async Task Main(string[] args)
     {
-        var speechConfig = SpeechConfig.FromSubscription(speechKey, speechRegion);        
+
+        var audioPath = "/Users/azamamonov/RiderProjects/SpeechToText/SpeechToText.Api/wwwroot/welcome.wav";
+
+        var speechConfig = SpeechConfig.FromSubscription(subscriptionKey: speechKey, region: speechRegion);
         speechConfig.SpeechRecognitionLanguage = "en-US";
 
-        var audioPath = "/Users/azamamonov/RiderProjects/TextToSpeach/TestToSpeech.Api/wwwroot/speeches/welcome.wav";
-       
         using var audioConfig = AudioConfig.FromWavFileInput(audioPath);
-        using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
-
-        Console.WriteLine("Speak into your microphone.");
-
+        // using var microphoneConfig = AudioConfig.FromDefaultMicrophoneInput();
         
-        // Define a timer for 2 minutes (120 seconds)
-        var durationOfAudioFile = (int)GetAudioFileDuration(audioPath);
-        var duration = TimeSpan.FromSeconds(durationOfAudioFile);
-        var startTime = DateTime.Now;
-        
-        while(DateTime.Now - startTime < duration)
+        using (var speechRecognizer = new SpeechRecognizer(speechConfig: speechConfig, audioConfig: audioConfig))
         {
-            var speechRecognitionResult = await speechRecognizer.RecognizeOnceAsync();
-            OutputSpeechRecognitionResult(speechRecognitionResult);
+            var result = await speechRecognizer.RecognizeOnceAsync();
+
+            OutputSpeechRecognitionResult(result);
         }
-
-        // var speechRecognitionResult = await speechRecognizer.RecognizeOnceAsync();
-        // OutputSpeechRecognitionResult(speechRecognitionResult);
-        // If you want to signal the end of listening after 2 minutes, you can add a message here.
-        Console.WriteLine("Listening ended after 2 minutes.");
     }
-
 }
