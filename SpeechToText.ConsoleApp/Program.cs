@@ -31,6 +31,7 @@ class Program
                 break;
         }
     }
+
     static double GetAudioFileDuration(string audioFilePath)
     {
         using (var audioFileReader = new AudioFileReader(audioFilePath))
@@ -43,20 +44,23 @@ class Program
     
     static async Task Main(string[] args)
     {
-
-        var audioPath = "/Users/azamamonov/RiderProjects/SpeechToText/SpeechToText.Api/wwwroot/welcome.wav";
-
-        var speechConfig = SpeechConfig.FromSubscription(subscriptionKey: speechKey, region: speechRegion);
+        var speechConfig = SpeechConfig.FromSubscription(speechKey, speechRegion);        
         speechConfig.SpeechRecognitionLanguage = "en-US";
 
+        var audioPath = "/Users/azamamonov/RiderProjects/SpeechToText/SpeechToText.Api/wwwroot/welcome.wav";
+       
         using var audioConfig = AudioConfig.FromWavFileInput(audioPath);
-        // using var microphoneConfig = AudioConfig.FromDefaultMicrophoneInput();
-        
-        using (var speechRecognizer = new SpeechRecognizer(speechConfig: speechConfig, audioConfig: audioConfig))
-        {
-            var result = await speechRecognizer.RecognizeOnceAsync();
+        using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
-            OutputSpeechRecognitionResult(result);
+        // Define a timer for 2 minutes (120 seconds)
+        var durationOfAudioFile = (int)GetAudioFileDuration(audioPath);
+        var duration = TimeSpan.FromSeconds(durationOfAudioFile);
+        var startTime = DateTime.Now;
+        
+        while(DateTime.Now - startTime < duration)
+        {
+            var speechRecognitionResult = await speechRecognizer.RecognizeOnceAsync();
+            OutputSpeechRecognitionResult(speechRecognitionResult);
         }
     }
 }
