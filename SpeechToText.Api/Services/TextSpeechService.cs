@@ -23,7 +23,6 @@ public class TextSpeechService: ITextSpeechService
         // var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
         
         // if we want input audio data form audio data!!!
-
         pathOfSpeech = "/Users/azamamonov/RiderProjects/SpeechToText/SpeechToText.Api/wwwroot/welcome.wav";
         var audioConfig = AudioConfig.FromWavFileInput(fileName: pathOfSpeech);
         
