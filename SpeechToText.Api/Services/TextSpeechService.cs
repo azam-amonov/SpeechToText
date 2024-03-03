@@ -16,12 +16,15 @@ public class TextSpeechService: ITextSpeechService
         this.webHostEnvironment = webHostEnvironment;
     }
 
+    // public async Task<SpeechRecognitionResult> GetTextOfSpeechAsync(string pathOfSpeech)
     public async Task<SpeechRecognitionResult> GetTextOfSpeechAsync(string pathOfSpeech)
     {
         // if we want input audio data form microphone!!!
         // var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
         
         // if we want input audio data form audio data!!!
+
+        pathOfSpeech = "/Users/azamamonov/RiderProjects/SpeechToText/SpeechToText.Api/wwwroot/welcome.wav";
         var audioConfig = AudioConfig.FromWavFileInput(fileName: pathOfSpeech);
         
         var speechConfig = SpeechConfig.FromSubscription( 
@@ -33,7 +36,7 @@ public class TextSpeechService: ITextSpeechService
         
         using (var speechRecognizer = new SpeechRecognizer(audioConfig: audioConfig, speechConfig: speechConfig))
         {
-                return await speechRecognizer.RecognizeOnceAsync();
+            return await speechRecognizer.RecognizeOnceAsync();
         }
 
     }
