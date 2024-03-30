@@ -7,7 +7,7 @@ namespace SpeechToText2.Services;
 
 public class TextSpeechService: ITextSpeechService
 {
-    private string SpeechKey = "f1ab29f30ea24d0e85b60360b9f3cf5e";
+    private string SpeechKey = "YOUR_SPEECH_KEY_HERE";
     private string SpeechRegion = "eastus";
     private readonly IWebHostEnvironment webHostEnvironment;
 
