@@ -6,14 +6,9 @@ namespace SpeechToText2.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 
-public class TextToSpeechController: ControllerBase
+public class TextToSpeechController(ITextSpeechService textToSpeechService) : ControllerBase
 {
-    private readonly ITextSpeechService textToSpeechService;
-
-    public TextToSpeechController(ITextSpeechService textToSpeechService)
-    {
-        this.textToSpeechService = textToSpeechService;
-    }
+    private readonly ITextSpeechService textToSpeechService = textToSpeechService;
 
     [HttpGet]
     public async ValueTask<IActionResult> GetTextToSpeech(string speechPath)

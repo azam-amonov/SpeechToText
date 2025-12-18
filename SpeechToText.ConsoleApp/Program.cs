@@ -28,7 +28,7 @@ class Program
                     Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
                     Console.WriteLine($"CANCELED: Did you set the speech resource key and region values?");
                 }
-                break;
+            break;
         }
     }
 
